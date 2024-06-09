@@ -20,6 +20,7 @@ import com.tricakrawala.cocktailsapp.R
 import com.tricakrawala.cocktailsapp.presentation.navigation.NavigationItem
 import com.tricakrawala.cocktailsapp.presentation.navigation.Screen
 import com.tricakrawala.cocktailsapp.presentation.ui.theme.primary
+import com.tricakrawala.cocktailsapp.presentation.ui.theme.red
 
 @Composable
 fun BottomBar(
@@ -49,15 +50,37 @@ fun BottomBar(
                 screen = Screen.About
             ),
         )
-        navigationItems.map { item ->
+
+        val navigationItemsFilled = listOf(
+            NavigationItem(
+                title = stringResource(R.string.menu_home),
+                icon = painterResource(id = R.drawable.ic_home_filled),
+                screen = Screen.Home
+            ),
+            NavigationItem(
+                title = stringResource(id = R.string.menu_reservation),
+                icon = painterResource(id = R.drawable.ic_reserv_filled),
+                screen = Screen.Reservation
+            ),
+            NavigationItem(
+                title = stringResource(R.string.menu_about),
+                icon = painterResource(id = R.drawable.ic_about_filled),
+                screen = Screen.About
+            ),
+        )
+
+
+        navigationItems.forEachIndexed { index, item ->
+            val filledItem = navigationItemsFilled[index]
             NavigationBarItem(
                 icon = {
                     Icon(
-                        painter = item.icon,
-                        contentDescription = item.title
+                        painter = if (currentRoute == item.screen.route) filledItem.icon else item.icon,
+                        contentDescription = item.title,
+                        tint = if (currentRoute == item.screen.route) red else primary
                     )
                 },
-                label = { Text(item.title) },
+                label = { Text(text = item.title)},
 //                selected = false,
                 selected = currentRoute == item.screen.route,
                 onClick = {

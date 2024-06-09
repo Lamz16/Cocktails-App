@@ -31,7 +31,7 @@ fun CocktailApp(
     Scaffold(
         bottomBar = {
             if (shouldShowBottomBar) {
-                BottomBar(navController, modifier = Modifier.navigationBarsPadding())
+                BottomBar(navController)
             }
         },
         modifier = modifier
