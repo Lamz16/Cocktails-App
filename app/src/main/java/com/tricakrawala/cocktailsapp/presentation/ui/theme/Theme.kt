@@ -1,4 +1,4 @@
-package com.tricakrawala.cocktailsapp.ui.theme
+package com.tricakrawala.cocktailsapp.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build
