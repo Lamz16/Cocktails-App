@@ -3,6 +3,7 @@ package com.tricakrawala.cocktailsapp.presentation.ui.theme
 import androidx.compose.ui.graphics.Color
 
 val Purple80 = Color(0xFFD0BCFF)
+val White = Color(0xFFFFFFFF)
 val PurpleGrey80 = Color(0xFFCCC2DC)
 val Pink80 = Color(0xFFEFB8C8)
 
@@ -12,3 +13,4 @@ val Pink40 = Color(0xFF7D5260)
 
 val primary = Color(0xFFFDAAA4)
 val red = Color(0xFFF44336)
+val fontColor1 = Color(0xFF530600)
