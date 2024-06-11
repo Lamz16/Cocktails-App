@@ -14,11 +14,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.tricakrawala.cocktailsapp.R
 import com.tricakrawala.cocktailsapp.presentation.ui.theme.CocktailsAppTheme
 import com.tricakrawala.cocktailsapp.presentation.ui.theme.fontColor1
@@ -27,7 +30,7 @@ import com.tricakrawala.cocktailsapp.presentation.ui.theme.poppinFamily
 @Composable
 fun CocktailItemRow(
     modifier: Modifier = Modifier,
-    image: Int,
+    image: String,
     nameMenu: String
 ) {
     Box(
@@ -50,8 +53,12 @@ fun CocktailItemRow(
                 .align(Alignment.Center)
                 .padding(16.dp)
         ) {
-            Image(
-                painter = painterResource(id = image), contentDescription = "", modifier = modifier
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(image)
+                    .crossfade(true)
+                    .build(),
+                 contentDescription = "", modifier = modifier
                     .align(Alignment.CenterHorizontally)
                     .size(height = 105.dp, width = 82.dp)
             )
@@ -64,17 +71,6 @@ fun CocktailItemRow(
                 fontSize = 16.sp
             )
         }
-    }
-}
-
-@Composable
-@Preview
-private fun Preview() {
-    CocktailsAppTheme {
-        CocktailItemRow(
-            image = R.drawable.dummy_item_row,
-            nameMenu = "Cocktail"
-        )
     }
 }
 

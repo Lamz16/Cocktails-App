@@ -17,8 +17,10 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,21 +35,34 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.tricakrawala.cocktailsapp.R
-import com.tricakrawala.cocktailsapp.domain.model.Drink
+import com.tricakrawala.cocktailsapp.data.resource.remote.response.DrinksItem
+import com.tricakrawala.cocktailsapp.presentation.common.Result
 import com.tricakrawala.cocktailsapp.presentation.ui.components.CocktailItemRow
 import com.tricakrawala.cocktailsapp.presentation.ui.components.SearchBarMenu
 import com.tricakrawala.cocktailsapp.presentation.ui.theme.CocktailsAppTheme
 import com.tricakrawala.cocktailsapp.presentation.ui.theme.poppinFamily
 import com.tricakrawala.cocktailsapp.presentation.ui.theme.red
 import com.tricakrawala.cocktailsapp.presentation.viewmodel.home.HomeViewModel
-import com.tricakrawala.cocktailsapp.utils.Utils
 
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel()
 ) {
-    Box {
-        HomeContent()
+    val uiState by viewModel.uiState.collectAsState()
+
+    when(val data = uiState){
+        is Result.Error -> {}
+        Result.Loading -> {
+            Box(modifier = Modifier.fillMaxSize()){
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+            }
+        }
+        is Result.Success ->{
+            Box(modifier = Modifier.fillMaxSize()){
+                HomeContent(listDrink = data.data)
+            }
+
+        }
     }
 
 }
@@ -55,8 +70,20 @@ fun HomeScreen(
 
 @Composable
 fun HomeContent(
-    listDrink : List<Drink> = emptyList()
+    listDrink : List<DrinksItem> = emptyList()
 ) {
+    var query by remember { mutableStateOf("") }
+    val filteredList = remember(query, listDrink) {
+        if (query.isEmpty()) {
+            listDrink
+        } else {
+            listDrink.filter {
+                it.strDrink.contains(query, ignoreCase = true)
+            }
+        }
+    }
+
+
     Column(
         Modifier
             .fillMaxSize()
@@ -87,7 +114,7 @@ fun HomeContent(
 
         }
 
-        var query by remember { mutableStateOf("") }
+
         Spacer(modifier = Modifier.height(24.dp))
         SearchBarMenu(query = query, onQueryChange = { newQuery ->
             query = newQuery
@@ -102,8 +129,8 @@ fun HomeContent(
             verticalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier.fillMaxHeight()
         ) {
-            items(listDrink){
-                CocktailItemRow(image = it.Image, nameMenu = it.title)
+            items(filteredList){
+                CocktailItemRow(image = it.strDrinkThumb, nameMenu = it.strDrink)
             }
         }
     }
@@ -114,7 +141,7 @@ fun HomeContent(
 private fun Preview() {
     CocktailsAppTheme {
         HomeContent(
-            listDrink = Utils.listDrink
+            listDrink = emptyList()
         )
     }
 }
