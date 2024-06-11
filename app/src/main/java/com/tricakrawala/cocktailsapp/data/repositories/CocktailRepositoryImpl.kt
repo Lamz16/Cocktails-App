@@ -26,4 +26,16 @@ class CocktailRepositoryImpl @Inject constructor(
         }
     }.flowOn(Dispatchers.IO)
 
+    override fun getDetailCocktail(id: String): Flow<Result<List<DrinksItem>>> = flow{
+        emit(Result.Loading)
+        try {
+            val response = remoteDataSource.getDetailCocktail(id)
+            val result = response.drinks
+            emit(Result.Success(result))
+        }catch (e : Exception){
+            emit(Result.Error(e.toString()))
+        }
+    }.flowOn(Dispatchers.IO)
+
+
 }

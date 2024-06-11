@@ -1,6 +1,7 @@
 package com.tricakrawala.cocktailsapp.presentation.ui.screen.home
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -46,7 +47,9 @@ import com.tricakrawala.cocktailsapp.presentation.viewmodel.home.HomeViewModel
 
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel(),
+    navToDetail : (String) -> Unit,
+
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -59,7 +62,7 @@ fun HomeScreen(
         }
         is Result.Success ->{
             Box(modifier = Modifier.fillMaxSize()){
-                HomeContent(listDrink = data.data)
+                HomeContent(listDrink = data.data, navToDetail = navToDetail)
             }
 
         }
@@ -70,7 +73,8 @@ fun HomeScreen(
 
 @Composable
 fun HomeContent(
-    listDrink : List<DrinksItem> = emptyList()
+    listDrink : List<DrinksItem> = emptyList(),
+    navToDetail: (String) -> Unit,
 ) {
     var query by remember { mutableStateOf("") }
     val filteredList = remember(query, listDrink) {
@@ -130,7 +134,7 @@ fun HomeContent(
             modifier = Modifier.fillMaxHeight()
         ) {
             items(filteredList){
-                CocktailItemRow(image = it.strDrinkThumb, nameMenu = it.strDrink)
+                CocktailItemRow(image = it.strDrinkThumb, nameMenu = it.strDrink, modifier = Modifier.clickable { navToDetail(it.idDrink) })
             }
         }
     }
@@ -141,7 +145,8 @@ fun HomeContent(
 private fun Preview() {
     CocktailsAppTheme {
         HomeContent(
-            listDrink = emptyList()
+            listDrink = emptyList(),
+            navToDetail = {}
         )
     }
 }

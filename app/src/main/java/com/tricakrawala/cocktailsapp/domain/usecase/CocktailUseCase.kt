@@ -7,5 +7,6 @@ import kotlinx.coroutines.flow.Flow
 interface CocktailUseCase {
 
     fun getAllCocktail() : Flow<Result<List<DrinksItem>>>
+    fun getDetailCocktail(id : String) : Flow<Result<List<DrinksItem>>>
 
 }
