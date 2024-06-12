@@ -11,4 +11,7 @@ import javax.inject.Singleton
 class CocktailInteract @Inject constructor(private val repository : ICocktailRepository) : CocktailUseCase {
     override fun getAllCocktail(): Flow<Result<List<DrinksItem>>> = repository.getAllCocktail()
     override fun getDetailCocktail(id: String): Flow<Result<List<DrinksItem>>> = repository.getDetailCocktail(id)
+    override fun getReservation(): Flow<Result<List<DrinksItem>>> {
+        TODO("Not yet implemented")
+    }
 }

@@ -8,5 +8,7 @@ interface CocktailUseCase {
 
     fun getAllCocktail() : Flow<Result<List<DrinksItem>>>
     fun getDetailCocktail(id : String) : Flow<Result<List<DrinksItem>>>
+    fun getReservation():  Flow<Result<List<DrinksItem>>>
+
 
 }
