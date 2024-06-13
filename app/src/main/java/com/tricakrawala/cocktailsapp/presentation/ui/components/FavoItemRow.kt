@@ -3,6 +3,7 @@ package com.tricakrawala.cocktailsapp.presentation.ui.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -32,6 +33,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -56,17 +58,16 @@ import com.tricakrawala.cocktailsapp.presentation.viewmodel.favorite.FavoriteVie
 @Composable
 fun FavoItemRow(
     modifier: Modifier = Modifier,
-    idDrink : String,
+    idDrink: String,
     image: String,
     type: String,
     glass: String,
     name: String,
-    isFavoriteInitial: Boolean,
     viewModel: FavoriteViewModel = hiltViewModel(),
     navigateToDetail: (String) -> Unit
 ) {
-    var isFavorite by remember { mutableStateOf(isFavoriteInitial) }
-    val iconFavorite = if (isFavorite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder
+
+    var isPressed by remember { mutableStateOf(false) }
 
     Box(
         modifier = modifier
@@ -85,7 +86,6 @@ fun FavoItemRow(
                 .padding(horizontal = 2.dp),
             colors = CardDefaults.cardColors(primary)
         ) {}
-
 
         Row(
             modifier = Modifier
@@ -143,23 +143,32 @@ fun FavoItemRow(
         }
         IconButton(
             onClick = {
-                isFavorite = !isFavorite
                 viewModel.deleteFavoriteCocktail(idDrink)
             },
             modifier = modifier
                 .align(Alignment.BottomEnd)
                 .padding(end = 16.dp)
+                .pointerInput(Unit) {
+                    detectTapGestures(
+                        onPress = {
+                            isPressed = true
+                            tryAwaitRelease()
+                            isPressed = false
+                        })
+                }
         ) {
             Icon(
-                imageVector = iconFavorite,
+                imageVector = if (isPressed) Icons.Outlined.FavoriteBorder else Icons.Filled.Favorite,
                 contentDescription = "favorite",
                 tint = red,
-                modifier = modifier.padding(bottom = 16.dp)
+                modifier = modifier
+                    .padding(bottom = 16.dp)
+
             )
         }
         val deleteState by viewModel.deleteState.collectAsState()
 
-        when(deleteState){
+        when (deleteState) {
             is Result.Error -> {}
             Result.Loading -> {}
             is Result.Success -> {
@@ -201,7 +210,6 @@ private fun Preview() {
             type = "Alcohol",
             glass = "collins glass",
             name = "3-Mle Long",
-            isFavoriteInitial = true,
             navigateToDetail = {}
         )
     }

@@ -91,8 +91,6 @@ fun HomeContent(
     Column(
         Modifier
             .fillMaxSize()
-            .navigationBarsPadding()
-            .statusBarsPadding()
             .padding(horizontal = 16.dp)
     ) {
         Box(modifier = Modifier.fillMaxWidth()) {

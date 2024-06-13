@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -17,13 +19,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.tricakrawala.cocktailsapp.R
-import com.tricakrawala.cocktailsapp.presentation.ui.theme.CocktailsAppTheme
 import com.tricakrawala.cocktailsapp.presentation.ui.theme.fontColor1
 import com.tricakrawala.cocktailsapp.presentation.ui.theme.poppinFamily
 
@@ -53,15 +53,23 @@ fun CocktailItemRow(
                 .align(Alignment.Center)
                 .padding(16.dp)
         ) {
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(image)
-                    .crossfade(true)
-                    .build(),
-                 contentDescription = "", modifier = modifier
+
+            Card(
+                modifier = Modifier
+                    .clip(CircleShape)
                     .align(Alignment.CenterHorizontally)
-                    .size(height = 105.dp, width = 82.dp)
-            )
+                    .size(80.dp)
+            ) {
+                AsyncImage(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(image)
+                        .crossfade(true)
+                        .build(),
+                    contentDescription = "", modifier = modifier.fillMaxSize()
+                )
+            }
+
+
             Text(
                 text = nameMenu,
                 fontFamily = poppinFamily,

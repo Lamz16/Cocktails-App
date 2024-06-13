@@ -49,7 +49,7 @@ fun CocktailApp(
                 })
             }
             composable(Screen.Favorite.route) {
-                FavoriteScreen(navController = navController, navToDetail = {idDrink ->
+                FavoriteScreen(navToDetail = {idDrink ->
                     navController.navigate(Screen.DetailDrink.createRoute(idDrink))
                 })
             }
