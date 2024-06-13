@@ -238,6 +238,7 @@ fun DetailContent(
 
             Spacer(modifier = Modifier.height(24.dp))
         }
+        Spacer(modifier = Modifier.height(24.dp))
         Spacer(modifier = Modifier.weight(1f))
 
         val favoriteList by viewModel.listFavorite.collectAsState()

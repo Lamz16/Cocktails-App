@@ -20,11 +20,26 @@ class FavoriteViewModel @Inject constructor(private val useCase : CocktailUseCas
         Result.Loading)
     val listFavorite: StateFlow<Result<List<CocktailDrink>>> get() = _listFavorite
 
+    private val _insertState : MutableStateFlow<Result<Unit>> = MutableStateFlow(Result.Loading)
+    val insertState: MutableStateFlow<Result<Unit>> get() = _insertState
+
     private val _deleteState : MutableStateFlow<Result<Unit>> = MutableStateFlow(Result.Loading)
-    val deleteState: StateFlow<Result<Unit>> get() = _deleteState
+    val deleteState: MutableStateFlow<Result<Unit>> get() = _deleteState
 
     init {
         getAllFavorite()
+    }
+
+    fun insertFavoriteCocktail(cocktailDrink: CocktailDrink){
+        viewModelScope.launch(Dispatchers.IO) {
+            _insertState.value = Result.Loading
+            try {
+                _insertState.value = Result.Success(useCase.insertFavorite(cocktailDrink))
+            }catch (e : Exception){
+                _insertState.value = Result.Error(e.message.toString())
+            }
+
+        }
     }
 
     fun getAllFavorite() {
@@ -36,7 +51,7 @@ class FavoriteViewModel @Inject constructor(private val useCase : CocktailUseCas
     }
 
     fun deleteFavoriteCocktail(idDrink: String){
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             _deleteState.value = Result.Loading
             try {
                 _deleteState.value = Result.Success(useCase.deleteFavorite(idDrink))

@@ -1,5 +1,6 @@
 package com.tricakrawala.cocktailsapp.domain.usecase
 
+import com.tricakrawala.cocktailsapp.data.pref.AuthModel
 import com.tricakrawala.cocktailsapp.data.resource.local.entity.CocktailDrink
 import com.tricakrawala.cocktailsapp.data.resource.remote.response.DrinksItem
 import com.tricakrawala.cocktailsapp.domain.repositories.ICocktailRepository
@@ -17,4 +18,9 @@ class CocktailInteract @Inject constructor(private val repository : ICocktailRep
     override suspend fun insertFavorite(cocktailDrink: CocktailDrink) = repository.insertFavorite(cocktailDrink)
 
     override suspend fun deleteFavorite(idDrink: String) = repository.deleteFavorite(idDrink)
+    override suspend fun saveSession(auth: AuthModel) = repository.saveSession(auth)
+
+    override fun getSession(): Flow<Result<AuthModel>> = repository.getSession()
+
+    override suspend fun logout() = repository.logout()
 }

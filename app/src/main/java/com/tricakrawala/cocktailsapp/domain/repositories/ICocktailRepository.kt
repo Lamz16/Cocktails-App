@@ -1,5 +1,6 @@
 package com.tricakrawala.cocktailsapp.domain.repositories
 
+import com.tricakrawala.cocktailsapp.data.pref.AuthModel
 import com.tricakrawala.cocktailsapp.data.resource.local.entity.CocktailDrink
 import com.tricakrawala.cocktailsapp.data.resource.remote.response.DrinksItem
 import com.tricakrawala.cocktailsapp.presentation.common.Result
@@ -15,5 +16,9 @@ interface ICocktailRepository {
     suspend fun insertFavorite(cocktailDrink: CocktailDrink)
 
     suspend fun deleteFavorite(idDrink: String)
+
+    suspend fun saveSession(auth : AuthModel)
+    fun getSession(): Flow<Result<AuthModel>>
+    suspend fun logout()
 
 }
