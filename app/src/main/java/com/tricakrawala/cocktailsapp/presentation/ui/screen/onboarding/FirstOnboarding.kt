@@ -1,4 +1,4 @@
-package com.tricakrawala.cocktailsapp.presentation.Onboarding
+package com.tricakrawala.cocktailsapp.presentation.ui.screen.onboarding
 
 
 import androidx.compose.foundation.Image
@@ -30,6 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tricakrawala.cocktailsapp.R
+import com.tricakrawala.cocktailsapp.presentation.ui.components.ButtonSplash1
 import com.tricakrawala.cocktailsapp.presentation.ui.theme.CocktailsAppTheme
 import com.tricakrawala.cocktailsapp.presentation.ui.theme.fontColor1
 import com.tricakrawala.cocktailsapp.presentation.ui.theme.poppinFamily
@@ -107,7 +108,7 @@ fun FirstOnboarding(
                 ButtonSplash1(
                     onClick = { },
                     color = primary,
-                    text = stringResource(id = R.string.selanjutnya),
+                    text = stringResource(id = R.string.next),
                     textColor = Color.White
                 )
             }
@@ -115,34 +116,6 @@ fun FirstOnboarding(
 
     }
 
-}
-
-@Composable
-fun ButtonSplash1(
-    color: Color,
-    text: String,
-    textColor: Color,
-    onClick: () -> Unit
-) {
-    Box(
-        modifier = Modifier
-            .clip(shape = RoundedCornerShape(10.dp))
-            .background(color)
-            .height(42.dp)
-            .width(160.dp)
-            .clickable { onClick() }
-    ) {
-
-        Text(
-            modifier = Modifier.fillMaxWidth().align(Alignment.Center),
-            text = text,
-            color = textColor,
-            textAlign = TextAlign.Center,
-            fontFamily = poppinFamily,
-            fontWeight = FontWeight.SemiBold,
-            fontSize = 12.sp
-        )
-    }
 }
 
 

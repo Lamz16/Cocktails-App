@@ -2,9 +2,8 @@ package com.tricakrawala.cocktailsapp.presentation.ui
 
 
 import android.os.Build
-import androidx.annotation.RequiresApi
-import androidx.compose.foundation.layout.navigationBarsPadding
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -45,9 +44,10 @@ fun CocktailApp(
 
     val shouldShowBottomBar = currentRoute !in Utils.screenWithoutBottomBar
     val auth by viewModel.session.collectAsState()
-    when(val currentAuth = auth){
+    when (val currentAuth = auth) {
         is Result.Success -> {
-            val startDestination = if (currentAuth.data.isLogin) Screen.Home.route else Screen.Home.route
+            val startDestination =
+                if (currentAuth.data.isLogin) Screen.Home.route else Screen.Home.route
             Scaffold(
                 bottomBar = {
                     if (shouldShowBottomBar) {
@@ -56,70 +56,62 @@ fun CocktailApp(
                 },
                 modifier = modifier
             ) { innerPadding ->
-
-    Scaffold(
-        bottomBar = {
-            if (shouldShowBottomBar) {
-                BottomBar(navController)
-            }
-        },
-        modifier = modifier
-    ) { innerPadding ->
-        NavHost(
-            navController = navController,
-            startDestination = Screen.Home.route,
-            modifier = Modifier.padding(innerPadding)
-        ) {
-            composable(Screen.Home.route) {
-                HomeScreen(navToDetail = {idDrink ->
-                    navController.navigate(Screen.DetailDrink.createRoute(idDrink))
-                })
-            }
-            composable(Screen.Reservation.route) {
-                ReservationScreen(navController = navController)
-            }
-            composable(Screen.About.route) {
-                AboutScreen()
-            }
-            composable(Screen.DetailDrink.route,
-                arguments = listOf(navArgument("idDrink") { type = NavType.StringType }),){
-                val idDrink = it.arguments?.getString("idDrink") ?: "Cant find id drink"
-                DetailDrinkScreen(id = idDrink, navController = navController)
-            }
                 NavHost(
                     navController = navController,
                     startDestination = startDestination,
                     modifier = Modifier.padding(innerPadding)
                 ) {
                     composable(Screen.Home.route) {
-                        HomeScreen(navToDetail = {idDrink ->
-                            navController.navigate(Screen.DetailDrink.createRoute(idDrink))
-                        })
-                    }
-                    composable(Screen.Favorite.route) {
-                        FavoriteScreen(navToDetail = {idDrink ->
+                        HomeScreen(navToDetail = { idDrink ->
                             navController.navigate(Screen.DetailDrink.createRoute(idDrink))
                         })
                     }
                     composable(Screen.About.route) {
                         AboutScreen()
                     }
-                    composable(Screen.DetailDrink.route,
-                        arguments = listOf(navArgument("idDrink") { type = NavType.StringType }),){
+                    composable(
+                        Screen.DetailDrink.route,
+                        arguments = listOf(navArgument("idDrink") {
+                            type = NavType.StringType
+                        }),
+                    ) {
                         val idDrink = it.arguments?.getString("idDrink") ?: "Cant find id drink"
                         DetailDrinkScreen(id = idDrink, navController = navController)
                     }
+                    composable(Screen.Home.route) {
+                        HomeScreen(navToDetail = { idDrink ->
+                            navController.navigate(Screen.DetailDrink.createRoute(idDrink))
+                        })
+                    }
+                    composable(Screen.Favorite.route) {
+                        FavoriteScreen(navToDetail = { idDrink ->
+                            navController.navigate(Screen.DetailDrink.createRoute(idDrink))
+                        })
+                    }
+                    composable(Screen.About.route) {
+                        AboutScreen()
+                    }
+                    composable(
+                        Screen.DetailDrink.route,
+                        arguments = listOf(navArgument("idDrink") {
+                            type = NavType.StringType
+                        }),
+                    ) {
+                        val idDrink =
+                            it.arguments?.getString("idDrink") ?: "Cant find id drink"
+                        DetailDrinkScreen(id = idDrink, navController = navController)
+                    }
 
-                    composable(Screen.Login.route){
+                    composable(Screen.Login.route) {
                         LoginScreen()
                     }
-                    composable(Screen.Register.route){
+                    composable(Screen.Register.route) {
                         RegisterScreen()
                     }
 
-
                 }
             }
+
         }
 
         else -> {
