@@ -1,9 +1,7 @@
 package com.tricakrawala.cocktailsapp.presentation.ui.components
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
@@ -18,9 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.tricakrawala.cocktailsapp.presentation.ui.screen.reserveation.ReservationConfirmationScreen
 import com.tricakrawala.cocktailsapp.presentation.ui.theme.CocktailsAppTheme
-import com.tricakrawala.cocktailsapp.presentation.ui.theme.primary
 import com.tricakrawala.cocktailsapp.presentation.ui.theme.red
 
 @Composable

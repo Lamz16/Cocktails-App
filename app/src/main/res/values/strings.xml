@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">Cocktails App</string>
     <string name="menu_home">Home</string>
-    <string name="menu_reservation">Reservation</string>
+    <string name="menu_favorite">Favorite</string>
     <string name="menu_about">About</string>
     <string name="search_menu">Search Your Drink</string>
     <string name="home_say">Find your\n\nFavorite Drink!</string>
     <string name="back">back</string>
-    <string name="type">Type: %s</string>
-    <string name="glass">Glass: %s</string>
+    <string name="type">Type : %s</string>
+    <string name="glass">Glass : %s</string>
     <string name="reservation">Reservation</string>
 </resources>

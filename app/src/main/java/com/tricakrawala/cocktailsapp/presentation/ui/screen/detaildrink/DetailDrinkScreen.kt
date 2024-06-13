@@ -1,5 +1,6 @@
 package com.tricakrawala.cocktailsapp.presentation.ui.screen.detaildrink
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -40,8 +41,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.tricakrawala.cocktailsapp.R
+import com.tricakrawala.cocktailsapp.data.resource.local.entity.CocktailDrink
 import com.tricakrawala.cocktailsapp.data.resource.remote.response.DrinksItem
 import com.tricakrawala.cocktailsapp.presentation.common.Result
+import com.tricakrawala.cocktailsapp.presentation.navigation.Screen
 import com.tricakrawala.cocktailsapp.presentation.ui.components.ButtonAddReserv
 import com.tricakrawala.cocktailsapp.presentation.ui.components.ImgDetail
 import com.tricakrawala.cocktailsapp.presentation.ui.theme.fontColor1
@@ -73,7 +76,7 @@ fun DetailDrinkScreen(
 
         is Result.Success -> {
             data.data.firstOrNull()?.let { drink ->
-                DetailContent(drink, navController)
+                DetailContent(drink, navController, viewModel = viewModel)
             } ?: run {
                 Box(Modifier.fillMaxSize()) {
                     Text(
@@ -93,6 +96,7 @@ fun DetailDrinkScreen(
 fun DetailContent(
     drinkData: DrinksItem,
     navController: NavHostController,
+    viewModel: DetailViewModel,
 ) {
 
     val ingredients = listOf(
@@ -221,7 +225,28 @@ fun DetailContent(
         }
         Spacer(modifier = Modifier.weight(1f))
 
-        ButtonAddReserv(teks = "Add Reservation", modifier = Modifier.padding(horizontal = 24.dp))
+        val favoriteList by viewModel.listFavorite.collectAsState()
+        val isFavorite = favoriteList is Result.Success && (favoriteList as Result.Success<List<CocktailDrink>>).data.any { it.idDrink == drinkData.idDrink }
+
+
+        ButtonAddReserv(isFavorite = isFavorite, modifier = Modifier.padding(horizontal = 24.dp).clickable {
+            val drinkData = CocktailDrink(
+                idDrink = drinkData.idDrink,
+                name = drinkData.strDrink,
+                image = drinkData.strDrinkThumb,
+                type = drinkData.strAlcoholic,
+                glass = drinkData.strGlass,
+                isFavorite = true
+            )
+            if (isFavorite) {
+                viewModel.deleteFavoriteCocktail(drinkData.idDrink)
+            } else {
+                viewModel.insertFavoriteCocktail(drinkData)
+            }
+            navController.navigate(Screen.Favorite.route){
+                popUpTo(Screen.Home.route)
+            }
+        })
     }
 
 }

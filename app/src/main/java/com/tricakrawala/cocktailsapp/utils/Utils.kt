@@ -1,8 +1,5 @@
 package com.tricakrawala.cocktailsapp.utils
 
-import com.tricakrawala.cocktailsapp.R
-import com.tricakrawala.cocktailsapp.data.resource.remote.response.DrinksItem
-import com.tricakrawala.cocktailsapp.domain.model.Drink
 import com.tricakrawala.cocktailsapp.presentation.navigation.Screen
 
 object Utils {

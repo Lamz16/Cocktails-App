@@ -1,5 +1,6 @@
 package com.tricakrawala.cocktailsapp.domain.usecase
 
+import com.tricakrawala.cocktailsapp.data.resource.local.entity.CocktailDrink
 import com.tricakrawala.cocktailsapp.data.resource.remote.response.DrinksItem
 import com.tricakrawala.cocktailsapp.domain.repositories.ICocktailRepository
 import com.tricakrawala.cocktailsapp.presentation.common.Result
@@ -11,7 +12,9 @@ import javax.inject.Singleton
 class CocktailInteract @Inject constructor(private val repository : ICocktailRepository) : CocktailUseCase {
     override fun getAllCocktail(): Flow<Result<List<DrinksItem>>> = repository.getAllCocktail()
     override fun getDetailCocktail(id: String): Flow<Result<List<DrinksItem>>> = repository.getDetailCocktail(id)
-    override fun getReservation(): Flow<Result<List<DrinksItem>>> {
-        TODO("Not yet implemented")
-    }
+    override fun getAllCocktailFavorite(): Flow<Result<List<CocktailDrink>>> = repository.getAllCocktailFavorite()
+
+    override suspend fun insertFavorite(cocktailDrink: CocktailDrink) = repository.insertFavorite(cocktailDrink)
+
+    override suspend fun deleteFavorite(idDrink: String) = repository.deleteFavorite(idDrink)
 }

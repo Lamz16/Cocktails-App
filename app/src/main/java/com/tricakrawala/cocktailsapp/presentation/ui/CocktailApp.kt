@@ -1,6 +1,5 @@
 package com.tricakrawala.cocktailsapp.presentation.ui
 
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -17,8 +16,8 @@ import com.tricakrawala.cocktailsapp.presentation.navigation.Screen
 import com.tricakrawala.cocktailsapp.presentation.ui.components.BottomBar
 import com.tricakrawala.cocktailsapp.presentation.ui.screen.about.AboutScreen
 import com.tricakrawala.cocktailsapp.presentation.ui.screen.detaildrink.DetailDrinkScreen
+import com.tricakrawala.cocktailsapp.presentation.ui.screen.favorite.FavoriteScreen
 import com.tricakrawala.cocktailsapp.presentation.ui.screen.home.HomeScreen
-import com.tricakrawala.cocktailsapp.presentation.ui.screen.reserveation.ReservationScreen
 import com.tricakrawala.cocktailsapp.utils.Utils
 
 @Composable
@@ -49,8 +48,10 @@ fun CocktailApp(
                     navController.navigate(Screen.DetailDrink.createRoute(idDrink))
                 })
             }
-            composable(Screen.Reservation.route) {
-                ReservationScreen()
+            composable(Screen.Favorite.route) {
+                FavoriteScreen(navController = navController, navToDetail = {idDrink ->
+                    navController.navigate(Screen.DetailDrink.createRoute(idDrink))
+                })
             }
             composable(Screen.About.route) {
                 AboutScreen()
