@@ -40,9 +40,9 @@ fun BottomBar(
                 screen = Screen.Home
             ),
             NavigationItem(
-                title = stringResource(id = R.string.menu_reservation),
+                title = stringResource(id = R.string.menu_favorite),
                 icon = painterResource(id = R.drawable.ic_reserv),
-                screen = Screen.Reservation
+                screen = Screen.Favorite
             ),
             NavigationItem(
                 title = stringResource(R.string.menu_about),
@@ -58,9 +58,9 @@ fun BottomBar(
                 screen = Screen.Home
             ),
             NavigationItem(
-                title = stringResource(id = R.string.menu_reservation),
+                title = stringResource(id = R.string.menu_favorite),
                 icon = painterResource(id = R.drawable.ic_reserv_filled),
-                screen = Screen.Reservation
+                screen = Screen.Favorite
             ),
             NavigationItem(
                 title = stringResource(R.string.menu_about),
@@ -86,7 +86,7 @@ fun BottomBar(
                 onClick = {
                     navController.navigate(item.screen.route) {
                         popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
+                            saveState = false
                         }
                         restoreState = true
                         launchSingleTop = true

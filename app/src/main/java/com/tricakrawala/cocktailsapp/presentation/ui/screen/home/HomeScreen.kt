@@ -1,6 +1,7 @@
 package com.tricakrawala.cocktailsapp.presentation.ui.screen.home
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -42,6 +43,7 @@ import com.tricakrawala.cocktailsapp.presentation.ui.components.CocktailItemRow
 import com.tricakrawala.cocktailsapp.presentation.ui.components.SearchBarMenu
 import com.tricakrawala.cocktailsapp.presentation.ui.theme.CocktailsAppTheme
 import com.tricakrawala.cocktailsapp.presentation.ui.theme.poppinFamily
+import com.tricakrawala.cocktailsapp.presentation.ui.theme.primary2
 import com.tricakrawala.cocktailsapp.presentation.ui.theme.red
 import com.tricakrawala.cocktailsapp.presentation.viewmodel.home.HomeViewModel
 
@@ -56,7 +58,7 @@ fun HomeScreen(
     when(val data = uiState){
         is Result.Error -> {}
         Result.Loading -> {
-            Box(modifier = Modifier.fillMaxSize()){
+            Box(modifier = Modifier.fillMaxSize().background(primary2)){
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
             }
         }
@@ -91,9 +93,8 @@ fun HomeContent(
     Column(
         Modifier
             .fillMaxSize()
-            .navigationBarsPadding()
-            .statusBarsPadding()
             .padding(horizontal = 16.dp)
+            .background(primary2)
     ) {
         Box(modifier = Modifier.fillMaxWidth()) {
             Text(

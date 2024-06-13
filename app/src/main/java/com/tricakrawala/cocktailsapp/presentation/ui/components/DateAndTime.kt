@@ -19,7 +19,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -37,8 +36,8 @@ import java.time.format.FormatStyle
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun DateAndTime(modifier: Modifier = Modifier){
-    var selectedDate by remember { mutableStateOf(LocalDate.now()) }
-    var selectedTime by remember { mutableStateOf(LocalTime.now()) }
+    val selectedDate by remember { mutableStateOf(LocalDate.now()) }
+    val selectedTime by remember { mutableStateOf(LocalTime.now()) }
 
 Row(
 modifier = Modifier.fillMaxWidth(),
@@ -55,7 +54,7 @@ horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text("Date")
             Text(
-                "${selectedDate.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))}",
+                selectedDate.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)),
                 fontFamily = poppinFamily,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 16.sp

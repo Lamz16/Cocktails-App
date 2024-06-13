@@ -1,15 +1,16 @@
 package com.tricakrawala.cocktailsapp.presentation.ui.screen.detaildrink
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -40,8 +41,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.tricakrawala.cocktailsapp.R
+import com.tricakrawala.cocktailsapp.data.resource.local.entity.CocktailDrink
 import com.tricakrawala.cocktailsapp.data.resource.remote.response.DrinksItem
 import com.tricakrawala.cocktailsapp.presentation.common.Result
+import com.tricakrawala.cocktailsapp.presentation.navigation.Screen
 import com.tricakrawala.cocktailsapp.presentation.ui.components.ButtonAddReserv
 import com.tricakrawala.cocktailsapp.presentation.ui.components.ImgDetail
 import com.tricakrawala.cocktailsapp.presentation.ui.theme.fontColor1
@@ -73,7 +76,9 @@ fun DetailDrinkScreen(
 
         is Result.Success -> {
             data.data.firstOrNull()?.let { drink ->
-                DetailContent(drink, navController)
+                Box(modifier = Modifier.fillMaxSize()) {
+                    DetailContent(drink, navController, viewModel = viewModel)
+                }
             } ?: run {
                 Box(Modifier.fillMaxSize()) {
                     Text(
@@ -93,6 +98,7 @@ fun DetailDrinkScreen(
 fun DetailContent(
     drinkData: DrinksItem,
     navController: NavHostController,
+    viewModel: DetailViewModel,
 ) {
 
     val ingredients = listOf(
@@ -115,10 +121,9 @@ fun DetailContent(
 
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .statusBarsPadding()
-            .navigationBarsPadding()
             .padding(start = 16.dp, end = 16.dp)
+            .navigationBarsPadding()
+            .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
         CenterAlignedTopAppBar(
@@ -137,15 +142,24 @@ fun DetailContent(
             colors = TopAppBarDefaults.centerAlignedTopAppBarColors(Color.Transparent),
         )
 
-        ImgDetail(image = drinkData.strDrinkThumb ?: "", title = drinkData.strDrink ?: "", modifier = Modifier.align(Alignment.CenterHorizontally))
-        
+        ImgDetail(
+            image = drinkData.strDrinkThumb,
+            title = drinkData.strDrink,
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+        )
+
         Spacer(modifier = Modifier.height(24.dp))
-        
-        Card(shape = RoundedCornerShape(16.dp), modifier = Modifier.padding(horizontal = 24.dp), colors = CardDefaults.cardColors(
-            primary)){
+
+        Card(
+            shape = RoundedCornerShape(16.dp),
+            modifier = Modifier.padding(horizontal = 24.dp).fillMaxWidth(),
+            colors = CardDefaults.cardColors(
+                primary
+            )
+        ) {
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = drinkData.strInstructions ?: "",
+                text = drinkData.strInstructions,
                 fontFamily = poppinFamily,
                 fontWeight = FontWeight.SemiBold,
                 color = fontColor1,
@@ -158,8 +172,13 @@ fun DetailContent(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Card(shape = RoundedCornerShape(16.dp), modifier = Modifier.padding(horizontal = 24.dp), colors = CardDefaults.cardColors(
-            primary)){
+        Card(
+            shape = RoundedCornerShape(16.dp),
+            modifier = Modifier.padding(horizontal = 24.dp),
+            colors = CardDefaults.cardColors(
+                primary
+            )
+        ) {
             Spacer(modifier = Modifier.height(16.dp))
             Row {
                 Text(
@@ -174,7 +193,7 @@ fun DetailContent(
                 Spacer(modifier = Modifier.weight(1f))
 
                 Text(
-                    text = stringResource(id = R.string.glass, drinkData.strGlass ?: ""),
+                    text = stringResource(id = R.string.glass, drinkData.strGlass),
                     fontFamily = poppinFamily,
                     fontWeight = FontWeight.SemiBold,
                     color = fontColor1,
@@ -219,11 +238,37 @@ fun DetailContent(
 
             Spacer(modifier = Modifier.height(24.dp))
         }
+        Spacer(modifier = Modifier.height(24.dp))
         Spacer(modifier = Modifier.weight(1f))
 
-        ButtonAddReserv(teks = "Add Reservation", modifier = Modifier.padding(horizontal = 24.dp))
-    }
+        val favoriteList by viewModel.listFavorite.collectAsState()
+        val isFavorite =
+            favoriteList is Result.Success && (favoriteList as Result.Success<List<CocktailDrink>>).data.any { it.idDrink == drinkData.idDrink }
 
+
+        ButtonAddReserv(
+            isFavorite = isFavorite,
+            modifier = Modifier
+                .padding(horizontal = 24.dp)
+                .clickable {
+                    val cocktailData = CocktailDrink(
+                        idDrink = drinkData.idDrink,
+                        name = drinkData.strDrink,
+                        image = drinkData.strDrinkThumb,
+                        type = drinkData.strAlcoholic,
+                        glass = drinkData.strGlass,
+                        isFavorite = true
+                    )
+                    if (isFavorite) {
+                        viewModel.deleteFavoriteCocktail(cocktailData.idDrink)
+                    } else {
+                        viewModel.insertFavoriteCocktail(cocktailData)
+                    }
+                    navController.navigate(Screen.Favorite.route) {
+                        popUpTo(Screen.Home.route)
+                    }
+                })
+    }
 }
 
 @Preview

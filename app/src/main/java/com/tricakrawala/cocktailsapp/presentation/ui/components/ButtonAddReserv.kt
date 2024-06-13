@@ -23,8 +23,9 @@ import com.tricakrawala.cocktailsapp.presentation.ui.theme.red
 @Composable
 fun ButtonAddReserv(
     modifier: Modifier = Modifier,
-    teks : String
+    isFavorite : Boolean,
 ){
+    val teks = if (isFavorite) "Delete from Favorite" else "Save to Favorite"
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(16.dp))

@@ -10,4 +10,6 @@ class RemoteDataSource @Inject constructor(
 ){
     suspend fun getAllCocktailA() = apiService.getAllCocktailA()
     suspend fun getDetailCocktail(id: String) = apiService.getDetailCocktail(id)
+
+
 }
