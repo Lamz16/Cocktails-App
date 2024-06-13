@@ -1,5 +1,9 @@
 package com.tricakrawala.cocktailsapp.presentation.ui
 
+
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.navigationBarsPadding
 import android.widget.Toast
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -28,6 +32,7 @@ import com.tricakrawala.cocktailsapp.presentation.ui.screen.home.HomeScreen
 import com.tricakrawala.cocktailsapp.presentation.viewmodel.auth.AuthViewModel
 import com.tricakrawala.cocktailsapp.utils.Utils
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CocktailApp(
     modifier: Modifier = Modifier,
@@ -52,6 +57,35 @@ fun CocktailApp(
                 modifier = modifier
             ) { innerPadding ->
 
+    Scaffold(
+        bottomBar = {
+            if (shouldShowBottomBar) {
+                BottomBar(navController)
+            }
+        },
+        modifier = modifier
+    ) { innerPadding ->
+        NavHost(
+            navController = navController,
+            startDestination = Screen.Home.route,
+            modifier = Modifier.padding(innerPadding)
+        ) {
+            composable(Screen.Home.route) {
+                HomeScreen(navToDetail = {idDrink ->
+                    navController.navigate(Screen.DetailDrink.createRoute(idDrink))
+                })
+            }
+            composable(Screen.Reservation.route) {
+                ReservationScreen(navController = navController)
+            }
+            composable(Screen.About.route) {
+                AboutScreen()
+            }
+            composable(Screen.DetailDrink.route,
+                arguments = listOf(navArgument("idDrink") { type = NavType.StringType }),){
+                val idDrink = it.arguments?.getString("idDrink") ?: "Cant find id drink"
+                DetailDrinkScreen(id = idDrink, navController = navController)
+            }
                 NavHost(
                     navController = navController,
                     startDestination = startDestination,
