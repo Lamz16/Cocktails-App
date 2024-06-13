@@ -158,7 +158,7 @@ fun FavoItemRow(
                                     viewModel.insertFavoriteCocktail(cocktailDrink)
                                 }
                             }
-                            delay(1000)
+                            delay(2000)
                             job.cancel()
                         }
 

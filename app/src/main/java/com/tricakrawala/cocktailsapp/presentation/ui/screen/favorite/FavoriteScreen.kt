@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -39,8 +40,10 @@ import com.tricakrawala.cocktailsapp.data.resource.local.entity.CocktailDrink
 import com.tricakrawala.cocktailsapp.presentation.common.Result
 import com.tricakrawala.cocktailsapp.presentation.ui.components.FavoItemRow
 import com.tricakrawala.cocktailsapp.presentation.ui.components.SearchBarMenu
+import com.tricakrawala.cocktailsapp.presentation.ui.theme.White
 import com.tricakrawala.cocktailsapp.presentation.ui.theme.fontColor1
 import com.tricakrawala.cocktailsapp.presentation.ui.theme.poppinFamily
+import com.tricakrawala.cocktailsapp.presentation.ui.theme.primary
 import com.tricakrawala.cocktailsapp.presentation.ui.theme.red
 import com.tricakrawala.cocktailsapp.presentation.viewmodel.favorite.FavoriteViewModel
 
@@ -93,7 +96,15 @@ fun FavoriteContent(
     }
 
     Scaffold(
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState){snackbarData ->
+            Snackbar(
+                snackbarData = snackbarData,
+                containerColor = red,
+                contentColor = White,
+                actionColor = fontColor1
+            )
+
+        } }
     ) { innerPadding ->
         Column(
             modifier = Modifier
