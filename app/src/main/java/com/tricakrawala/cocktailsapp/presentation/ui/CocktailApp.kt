@@ -1,11 +1,14 @@
 package com.tricakrawala.cocktailsapp.presentation.ui
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -21,6 +24,7 @@ import com.tricakrawala.cocktailsapp.presentation.ui.screen.home.HomeScreen
 import com.tricakrawala.cocktailsapp.presentation.ui.screen.reserveation.ReservationScreen
 import com.tricakrawala.cocktailsapp.utils.Utils
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CocktailApp(
     modifier: Modifier = Modifier,
@@ -50,7 +54,7 @@ fun CocktailApp(
                 })
             }
             composable(Screen.Reservation.route) {
-                ReservationScreen()
+                ReservationScreen(navController = navController)
             }
             composable(Screen.About.route) {
                 AboutScreen()
