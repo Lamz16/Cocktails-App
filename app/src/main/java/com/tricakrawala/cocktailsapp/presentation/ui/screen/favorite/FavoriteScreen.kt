@@ -116,19 +116,25 @@ fun FavoriteContent(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        LazyColumn(
-            modifier = Modifier.fillMaxHeight(),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            items(filteredList) {
-                FavoItemRow(
-                    idDrink = it.idDrink,
-                    image = it.image,
-                    type = it.type,
-                    glass = it.glass,
-                    name = it.name,
-                    navigateToDetail = navToDetail
-                )
+        if (filteredList.isNotEmpty()){
+            LazyColumn(
+                modifier = Modifier.fillMaxHeight(),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                items(filteredList) {
+                    FavoItemRow(
+                        idDrink = it.idDrink,
+                        image = it.image,
+                        type = it.type,
+                        glass = it.glass,
+                        name = it.name,
+                        navigateToDetail = navToDetail
+                    )
+                }
+            }
+        }else{
+            Box(modifier = Modifier.fillMaxSize()) {
+
             }
         }
     }

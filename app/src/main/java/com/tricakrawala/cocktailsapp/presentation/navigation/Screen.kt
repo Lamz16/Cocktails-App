@@ -9,4 +9,7 @@ sealed class Screen(val route: String) {
         fun createRoute(idDrink: String) = "home/$idDrink"
     }
 
+    data object Login : Screen("login")
+    data object Register : Screen("register")
+
 }
