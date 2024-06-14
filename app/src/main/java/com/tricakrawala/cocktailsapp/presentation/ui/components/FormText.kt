@@ -174,7 +174,7 @@ fun TextPeople() {
                     )
                     {
                         Icon(
-                            painter = painterResource(R.drawable.ic_minus),
+                            painter = painterResource(R.drawable.ic_time_white),
                             contentDescription = "Decrease",
                             tint = Color.White,
                             modifier = Modifier
