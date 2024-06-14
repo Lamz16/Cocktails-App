@@ -1,10 +1,8 @@
 package com.tricakrawala.cocktailsapp.presentation.viewmodel.home
 
-import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tricakrawala.cocktailsapp.data.resource.remote.response.DrinksItem
-import com.tricakrawala.cocktailsapp.domain.model.Drink
 import com.tricakrawala.cocktailsapp.domain.usecase.CocktailUseCase
 import com.tricakrawala.cocktailsapp.presentation.common.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,7 +22,7 @@ class HomeViewModel @Inject constructor(private val useCase: CocktailUseCase) : 
         getAllCocktails()
     }
 
-    fun getAllCocktails(){
+    private fun getAllCocktails(){
         viewModelScope.launch(Dispatchers.IO) {
             useCase.getAllCocktail()
                 .catch {
