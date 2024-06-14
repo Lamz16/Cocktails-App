@@ -31,7 +31,7 @@ fun ButtonSplash1(
             .clip(shape = RoundedCornerShape(10.dp))
             .background(color)
             .height(42.dp)
-            .width(160.dp)
+            .width(400.dp)
             .clickable { onClick() }
     ) {
 
@@ -42,7 +42,7 @@ fun ButtonSplash1(
             textAlign = TextAlign.Center,
             fontFamily = poppinFamily,
             fontWeight = FontWeight.SemiBold,
-            fontSize = 12.sp
+            fontSize = 14.sp
         )
     }
 }

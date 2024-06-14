@@ -117,9 +117,17 @@ fun RegisterContent(
         Text(
             text = "Register",
             fontFamily = poppinFamily,
+            fontWeight = FontWeight.Bold,
+            color = red,
+            fontSize = 40.sp
+        )
+
+        Text(
+            text = "Welcome to App!",
+            fontFamily = poppinFamily,
             fontWeight = FontWeight.Medium,
             color = red,
-            fontSize = 16.sp
+            fontSize = 20.sp
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -170,7 +178,8 @@ fun RegisterContent(
                 isLoading = true
                 viewModel.register(email, password, name)
             },
-            colors = ButtonDefaults.buttonColors(primary)
+            colors = ButtonDefaults.buttonColors(primary),
+            modifier = Modifier.size(width = 350.dp, height = 48.dp)
         ) {
             if (isLoading) {
                 CircularProgressIndicator(
@@ -178,7 +187,12 @@ fun RegisterContent(
                     modifier = Modifier.size(24.dp)
                 )
             } else {
-                Text(text = "Register")
+                Text(
+                    text = "Register",
+                    fontFamily = poppinFamily,
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 16.sp
+                )
             }
         }
     }

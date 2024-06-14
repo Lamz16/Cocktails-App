@@ -116,9 +116,17 @@ fun LoginContent(
         Text(
             text = "Login",
             fontFamily = poppinFamily,
+            fontWeight = FontWeight.Bold,
+            color = red,
+            fontSize = 40.sp
+        )
+
+        Text(
+            text = "Welcome to Luxy Cocktails",
+            fontFamily = poppinFamily,
             fontWeight = FontWeight.Medium,
             color = red,
-            fontSize = 16.sp
+            fontSize = 20.sp
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -162,7 +170,8 @@ fun LoginContent(
                 isLoading = true
                 viewModel.login(email, password)
             },
-            colors = ButtonDefaults.buttonColors(primary)
+            colors = ButtonDefaults.buttonColors(primary),
+            modifier = Modifier.size(width = 350.dp, height = 48.dp)
         ) {
             if (isLoading) {
                 CircularProgressIndicator(
@@ -170,7 +179,12 @@ fun LoginContent(
                     modifier = Modifier.size(24.dp)
                 )
             } else {
-                Text(text = "Login")
+                Text(
+                    text = "Login",
+                    fontFamily = poppinFamily,
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 16.sp
+                )
             }
         }
 
