@@ -44,7 +44,7 @@ fun AboutContent() {
             .statusBarsPadding()
             .navigationBarsPadding()
             .verticalScroll(rememberScrollState())
-            .padding(horizontal = 16.dp) // Add horizontal padding for content spacing
+            .padding(horizontal = 16.dp)
     ) {
 
         CenterAlignedTopAppBar(
@@ -65,8 +65,8 @@ fun AboutContent() {
 
         Column(
             modifier = Modifier
-                .align(Alignment.TopCenter) // Align the Column to the top center of the Box
-                .padding(top = 80.dp, bottom = 16.dp) // Adjust top padding as needed for vertical positioning
+                .align(Alignment.TopCenter)
+                .padding(top = 80.dp, bottom = 16.dp)
         ) {
             Text(
                 text = "Welcome to CocktailsApp, your ultimate guide to cocktails!",

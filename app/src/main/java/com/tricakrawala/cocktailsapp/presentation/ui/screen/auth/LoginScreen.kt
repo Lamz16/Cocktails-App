@@ -107,7 +107,7 @@ fun LoginContent(
 
         Image(
             painter = painterResource(id = R.drawable.glass),
-            contentDescription = "logo Unesco",
+            contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(300.dp)
