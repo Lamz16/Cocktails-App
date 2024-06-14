@@ -1,15 +1,12 @@
 package com.tricakrawala.cocktailsapp.presentation.ui
 
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -32,7 +29,6 @@ import com.tricakrawala.cocktailsapp.presentation.ui.screen.onboarding.SecondOnb
 import com.tricakrawala.cocktailsapp.presentation.viewmodel.auth.AuthViewModel
 import com.tricakrawala.cocktailsapp.utils.Utils
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CocktailApp(
     modifier: Modifier = Modifier,
@@ -74,9 +70,6 @@ fun CocktailApp(
                             navController.navigate(Screen.DetailDrink.createRoute(idDrink))
                         })
                     }
-                    composable(Screen.About.route) {
-                        AboutScreen()
-                    }
                     composable(
                         Screen.DetailDrink.route,
                         arguments = listOf(navArgument("idDrink") {
@@ -97,7 +90,7 @@ fun CocktailApp(
                         })
                     }
                     composable(Screen.About.route) {
-                        AboutScreen()
+                        AboutScreen(navController = navController)
                     }
                     composable(
                         Screen.DetailDrink.route,

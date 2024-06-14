@@ -20,7 +20,6 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -43,7 +42,6 @@ import com.tricakrawala.cocktailsapp.presentation.ui.components.SearchBarMenu
 import com.tricakrawala.cocktailsapp.presentation.ui.theme.White
 import com.tricakrawala.cocktailsapp.presentation.ui.theme.fontColor1
 import com.tricakrawala.cocktailsapp.presentation.ui.theme.poppinFamily
-import com.tricakrawala.cocktailsapp.presentation.ui.theme.primary
 import com.tricakrawala.cocktailsapp.presentation.ui.theme.red
 import com.tricakrawala.cocktailsapp.presentation.viewmodel.favorite.FavoriteViewModel
 
@@ -94,6 +92,8 @@ fun FavoriteContent(
             }
         }
     }
+    val insertState by viewModel.insertState.collectAsState()
+    val deleteState by viewModel.deleteState.collectAsState()
 
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState){snackbarData ->
@@ -140,23 +140,16 @@ fun FavoriteContent(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            val insertState by viewModel.insertState.collectAsState()
-
-            val deleteState by viewModel.deleteState.collectAsState()
-
                 when (insertState) {
                     is Result.Success -> {
-                        viewModel.getAllFavorite()
-                    }
+                        viewModel.getAllFavorite() }
 
                     else -> {}
                 }
 
                 when (deleteState) {
                     is Result.Success -> {
-                        viewModel.getAllFavorite()
-
-                    }
+                        viewModel.getAllFavorite() }
 
                     else -> {}
                 }
