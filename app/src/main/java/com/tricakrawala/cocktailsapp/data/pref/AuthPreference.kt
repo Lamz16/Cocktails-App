@@ -24,6 +24,7 @@ class AuthPreference @Inject constructor(@SessionDataStore private val dataStore
             preferences[EMAIL] = auth.email
             preferences[NAME] = auth.name
             preferences[IS_LOGIN] = auth.isLogin
+            preferences[IS_NEW] = auth.isNew
             Log.d(TAG, "saveSession: $auth")
         }
     }
@@ -35,6 +36,7 @@ class AuthPreference @Inject constructor(@SessionDataStore private val dataStore
                 preferences[EMAIL] ?: "",
                 preferences[NAME] ?: "",
                 preferences[IS_LOGIN] ?: false,
+                preferences[IS_NEW] ?: true,
 
                 )
         }
@@ -50,6 +52,7 @@ class AuthPreference @Inject constructor(@SessionDataStore private val dataStore
         private const val TAG = "Preference"
 
         private val IS_LOGIN = booleanPreferencesKey("isLogin")
+        private val IS_NEW = booleanPreferencesKey("isNew")
         private val NAME = stringPreferencesKey("name")
         private val EMAIL = stringPreferencesKey("email")
     }

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "378827869000",
+    "project_id": "cocktails-app-f2fab",
+    "storage_bucket": "cocktails-app-f2fab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:378827869000:android:3d85c23d96651d3e30017d",
+        "android_client_info": {
+          "package_name": "com.tricakrawala.cocktailsapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAh1E20u5TdI7iNqr1T7Jx_cyAGsG-ovI4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

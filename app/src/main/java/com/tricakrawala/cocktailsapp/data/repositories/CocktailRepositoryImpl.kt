@@ -1,5 +1,9 @@
 package com.tricakrawala.cocktailsapp.data.repositories
 
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthException
+import com.google.firebase.auth.userProfileChangeRequest
 import com.tricakrawala.cocktailsapp.data.pref.AuthModel
 import com.tricakrawala.cocktailsapp.data.pref.AuthPreference
 import com.tricakrawala.cocktailsapp.data.resource.local.LocalDataSource
@@ -13,6 +17,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -21,6 +26,7 @@ class CocktailRepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource,
     private val authPref : AuthPreference,
+    private val firebaseAuth: FirebaseAuth
 ) : ICocktailRepository {
     override fun getAllCocktail(): Flow<Result<List<DrinksItem>>> = flow{
         emit(Result.Loading)
@@ -73,6 +79,37 @@ class CocktailRepositoryImpl @Inject constructor(
 
     override suspend fun logout() {
         authPref.logout()
+    }
+
+    override fun login(email: String, password: String): Flow<Result<AuthResult>> = flow{
+        emit(Result.Loading)
+        try {
+            val result = firebaseAuth.signInWithEmailAndPassword(email,password).await()
+            emit(Result.Success(result))
+        }catch (e : FirebaseAuthException){
+            emit(Result.Error(e.toString()))
+        }catch (e : Exception){
+            emit(Result.Error(e.toString()))
+        }
+    }
+
+    override fun register(email: String, password: String, name: String): Flow<Result<AuthResult>> = flow {
+        emit(Result.Loading)
+        try {
+            val result = firebaseAuth.createUserWithEmailAndPassword(email,password).await()
+            val user = firebaseAuth.currentUser
+            user?.let {
+                val profileUpdates = userProfileChangeRequest {
+                    displayName = name
+                }
+                it.updateProfile(profileUpdates).await()
+            }
+            emit(Result.Success(result))
+        }catch (e : FirebaseAuthException){
+            emit(Result.Error(e.toString()))
+        }catch (e : Exception){
+            emit(Result.Error(e.toString()))
+        }
     }
 
 }

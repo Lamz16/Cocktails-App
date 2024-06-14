@@ -25,13 +25,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.tricakrawala.cocktailsapp.R
+import com.tricakrawala.cocktailsapp.presentation.navigation.Screen
 import com.tricakrawala.cocktailsapp.presentation.ui.theme.CocktailsAppTheme
 import com.tricakrawala.cocktailsapp.presentation.ui.theme.poppinFamily
 import com.tricakrawala.cocktailsapp.presentation.ui.theme.primary
 
 @Composable
-fun SecondOnboarding() {
+fun SecondOnboarding(
+    navController : NavHostController
+) {
     Box(modifier = Modifier
         .fillMaxSize()
         .background(primary),
@@ -73,7 +78,7 @@ fun SecondOnboarding() {
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
                 Button(
-                    onClick = { /* Handle button click */ },
+                    onClick = { navController.navigate(Screen.Login.route) },
                     modifier = Modifier.weight(1f),
                     colors = ButtonDefaults.buttonColors(
                         Color.White,
@@ -85,7 +90,7 @@ fun SecondOnboarding() {
                 }
                 Spacer(modifier = Modifier.size(20.dp))
                 Button(
-                    onClick = { /* Handle button click */ },
+                    onClick = { navController.navigate(Screen.Register.route) },
                     modifier = Modifier.weight(1f),
                     colors = ButtonDefaults.buttonColors(
                         Color.White,
@@ -103,6 +108,6 @@ fun SecondOnboarding() {
 @Preview(showBackground = true)
 private fun PreviewThree() {
     CocktailsAppTheme {
-        SecondOnboarding()
+        SecondOnboarding(rememberNavController())
     }
 }

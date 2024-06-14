@@ -5,4 +5,5 @@ plugins {
     alias(libs.plugins.parcelize) apply false
     alias(libs.plugins.google.devtools.ksp) apply false
     alias(libs.plugins.dagger.hilt.android) apply false
+    alias(libs.plugins.google.gms.google.services) apply false
 }

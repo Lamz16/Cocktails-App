@@ -2,7 +2,6 @@ package com.tricakrawala.cocktailsapp.presentation.ui
 
 
 import android.os.Build
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -28,6 +27,8 @@ import com.tricakrawala.cocktailsapp.presentation.ui.screen.auth.RegisterScreen
 import com.tricakrawala.cocktailsapp.presentation.ui.screen.detaildrink.DetailDrinkScreen
 import com.tricakrawala.cocktailsapp.presentation.ui.screen.favorite.FavoriteScreen
 import com.tricakrawala.cocktailsapp.presentation.ui.screen.home.HomeScreen
+import com.tricakrawala.cocktailsapp.presentation.ui.screen.onboarding.FirstOnboarding
+import com.tricakrawala.cocktailsapp.presentation.ui.screen.onboarding.SecondOnboarding
 import com.tricakrawala.cocktailsapp.presentation.viewmodel.auth.AuthViewModel
 import com.tricakrawala.cocktailsapp.utils.Utils
 
@@ -40,14 +41,21 @@ fun CocktailApp(
 ) {
     val navBackStack by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStack?.destination?.route
-    val context = LocalContext.current
 
     val shouldShowBottomBar = currentRoute !in Utils.screenWithoutBottomBar
     val auth by viewModel.session.collectAsState()
     when (val currentAuth = auth) {
         is Result.Success -> {
             val startDestination =
-                if (currentAuth.data.isLogin) Screen.Home.route else Screen.Home.route
+                if (currentAuth.data.isLogin){
+                   Screen.Home.route
+                }else{
+                    if (currentAuth.data.isNew){
+                        Screen.FirstOnBoard.route
+                    }else{
+                        Screen.SecondOnBoard.route
+                    }
+                }
             Scaffold(
                 bottomBar = {
                     if (shouldShowBottomBar) {
@@ -103,10 +111,16 @@ fun CocktailApp(
                     }
 
                     composable(Screen.Login.route) {
-                        LoginScreen()
+                        LoginScreen(navController = navController)
                     }
                     composable(Screen.Register.route) {
-                        RegisterScreen()
+                        RegisterScreen(navController = navController)
+                    }
+                    composable(Screen.FirstOnBoard.route){
+                        FirstOnboarding(navController = navController)
+                    }
+                    composable(Screen.SecondOnBoard.route){
+                        SecondOnboarding(navController)
                     }
 
                 }
@@ -114,9 +128,7 @@ fun CocktailApp(
 
         }
 
-        else -> {
-            Toast.makeText(context, "Unknown Error", Toast.LENGTH_SHORT).show()
-        }
+        else -> {}
     }
 
 }

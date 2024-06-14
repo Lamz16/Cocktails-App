@@ -1,5 +1,6 @@
 package com.tricakrawala.cocktailsapp.domain.usecase
 
+import com.google.firebase.auth.AuthResult
 import com.tricakrawala.cocktailsapp.data.pref.AuthModel
 import com.tricakrawala.cocktailsapp.data.resource.local.entity.CocktailDrink
 import com.tricakrawala.cocktailsapp.data.resource.remote.response.DrinksItem
@@ -20,5 +21,8 @@ interface CocktailUseCase {
     suspend fun saveSession(auth : AuthModel)
     fun getSession(): Flow<Result<AuthModel>>
     suspend fun logout()
+
+    fun login(email: String, password: String) : Flow<Result<AuthResult>>
+    fun register(email: String, password: String,name : String) : Flow<Result<AuthResult>>
 
 }

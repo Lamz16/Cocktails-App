@@ -1,5 +1,6 @@
 package com.tricakrawala.cocktailsapp.domain.usecase
 
+import com.google.firebase.auth.AuthResult
 import com.tricakrawala.cocktailsapp.data.pref.AuthModel
 import com.tricakrawala.cocktailsapp.data.resource.local.entity.CocktailDrink
 import com.tricakrawala.cocktailsapp.data.resource.remote.response.DrinksItem
@@ -23,4 +24,7 @@ class CocktailInteract @Inject constructor(private val repository : ICocktailRep
     override fun getSession(): Flow<Result<AuthModel>> = repository.getSession()
 
     override suspend fun logout() = repository.logout()
+    override fun login(email: String, password: String): Flow<Result<AuthResult>> = repository.login(email, password)
+
+    override fun register(email: String, password: String, name: String): Flow<Result<AuthResult>> = repository.register(email, password, name)
 }

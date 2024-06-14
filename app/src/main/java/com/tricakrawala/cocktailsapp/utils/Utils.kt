@@ -6,7 +6,9 @@ object Utils {
     val screenWithoutBottomBar = listOf(
         Screen.DetailDrink.route,
         Screen.Login.route,
-        Screen.Register.route
+        Screen.Register.route,
+        Screen.FirstOnBoard.route,
+        Screen.SecondOnBoard.route
     )
 
     const val BASE_URL = "https://www.thecocktaildb.com/api/json/v1/1/"
