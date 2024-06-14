@@ -1,6 +1,7 @@
 package com.tricakrawala.cocktailsapp.di
 
 import android.content.Context
+import com.tricakrawala.cocktailsapp.BuildConfig
 import com.tricakrawala.cocktailsapp.data.resource.remote.retrofit.ApiService
 import com.tricakrawala.cocktailsapp.utils.Utils
 import dagger.Module
@@ -78,7 +79,7 @@ object NetworkModule {
     @Singleton
     fun provideApiService(client: OkHttpClient): ApiService {
         return Retrofit.Builder()
-            .baseUrl(Utils.BASE_URL)
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
